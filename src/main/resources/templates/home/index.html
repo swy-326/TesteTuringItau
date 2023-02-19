@@ -26,7 +26,7 @@
         </thead>
         <tbody>
         <tr th:each="conta : ${listaContas}">
-            <td th:text="|${conta.nroBanco} + '-' + ${conta.nroAgencia} + '-' + ${conta.nroConta}|">Nro Conta</td>
+            <td th:text="|${conta.nroBanco}-${conta.nroAgencia}-${conta.nroConta}|">Nro Conta</td>
             <td th:text="${conta.saldo}">Saldo</td>
             <td>
                 <a th:href="@{'/transacao/pix}">PIX</a>

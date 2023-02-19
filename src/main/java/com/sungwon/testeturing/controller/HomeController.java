@@ -27,18 +27,13 @@ public class HomeController {
     public String home(Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
 
         String usuarioRef = userDetails.getUsername();
-
-        Object secUsuarioRef = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String secUsuarioRefNome = ((CustomUserDetails)secUsuarioRef).getUsuario().getNomeCompleto();
-
-        System.out.println("===================================\n" + usuarioRef + "\n==============================");
-        System.out.println("===================================\n" + secUsuarioRefNome + "\n==============================");
+        String usuarioNomeCompleto = userDetails.getUsuario().getNomeCompleto();
 
         List<ContaDTO> listaContas = contaService.findByUsuarioRef(usuarioRef)
                 .stream().map(ContaDTO::create).collect(Collectors.toList());
 
         model.addAttribute("listaContas", listaContas);
-        model.addAttribute("nomeCompleto", secUsuarioRefNome);
+        model.addAttribute("nomeCompleto", usuarioNomeCompleto);
 
         return "home/index";
     }

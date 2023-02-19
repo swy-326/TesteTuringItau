@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nova Conta</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div class="container text-center">
+
+    <div>
+        <h1>Nova Conta</h1>
+    </div>
+
+    <form th:action="@{/conta/nova}" method="post">
+        <div class="form-outline mb-4">
+            <label>Chave PIX</label>
+            <input type="text" class="form-control" name="chavePix" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Nro Banco</label>
+            <input type="text" class="form-control" name="nroBanco" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Nro Agencia</label>
+            <input type="text" class="form-control" name="nroAgencia" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Nro Conta</label>
+            <input type="text" class="form-control" name="nroConta" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+    </form>
+
+</div>
+
+</body>
+</html>
