@@ -10,9 +10,7 @@ import java.io.Serializable;
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Usuario {
 
     @Id
     @Column(name="username", nullable = false, unique = true)

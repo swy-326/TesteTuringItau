@@ -13,9 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_conta")
-public class Conta implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Conta{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

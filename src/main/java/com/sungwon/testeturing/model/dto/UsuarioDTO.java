@@ -10,20 +10,22 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CadastroDTO implements Serializable {
+public class UsuarioDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String username;
     private String password;
+    private String nomeCompleto;
 
-    public Usuario toUsuario(){
+    public Usuario toUsuarioEntity(){
+        Usuario usuario = new Usuario();
 
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setUsername(this.getUsername());
-        novoUsuario.setPassword(this.getPassword());
+        usuario.setUsername(this.getUsername());
+        usuario.setPassword(this.getPassword());
+        usuario.setNomeCompleto(this.getNomeCompleto());
 
-        return novoUsuario;
+        return usuario;
     }
 
 }

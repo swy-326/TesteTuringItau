@@ -12,9 +12,7 @@ import java.math.BigDecimal;
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "tb_transacao")
-public class Transacao implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Transacao{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,15 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping(value  = "/")
-public class MainController {
+@RequestMapping("/usuario")
+public class UsuarioController {
 
-    // show name, accounts, balance
-    @GetMapping("")
-    public String home(){
-        return "home/index";
-    }
+    // tela principal - mostrar nome
+    //@GetMapping("/id/{id}")
+    //public String
 
+    // logout
 }
