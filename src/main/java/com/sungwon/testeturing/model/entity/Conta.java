@@ -20,7 +20,7 @@ public class Conta{
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "usuario_ref")
     private Usuario usuarioRef;
 
     private String chavePix;

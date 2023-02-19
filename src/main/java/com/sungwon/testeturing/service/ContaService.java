@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class ContaService {
@@ -16,6 +17,10 @@ public class ContaService {
     public Conta insert(Conta conta){
         Conta nova_conta = repository.save(conta);
         return nova_conta;
+    }
+
+    public List<Conta> findByUsuarioRef(String usuarioRef){
+        return repository.findByUsuarioRef(usuarioRef);
     }
 
 }
