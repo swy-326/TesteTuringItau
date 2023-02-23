@@ -47,8 +47,7 @@ public class CadastroController {
         novoUsuario.setPassword(encodedPassword);
 
         usuarioService.save(novoUsuario);
-        return "login/index"; // apos o cadastro, redireciona para login
+        return "redirect:login/index";
     }
-
 
 }

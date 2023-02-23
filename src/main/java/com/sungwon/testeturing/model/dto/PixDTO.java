@@ -15,6 +15,7 @@ public class PixDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long idContaOrigem;
     private String chavePix;
     private BigDecimal valorTransacao;
 

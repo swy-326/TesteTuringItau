@@ -8,16 +8,16 @@ import com.sungwon.testeturing.model.enums.TipoTransacao;
 import com.sungwon.testeturing.security.CustomUserDetails;
 import com.sungwon.testeturing.service.ContaService;
 import com.sungwon.testeturing.service.TransacaoService;
+import com.sungwon.testeturing.utils.PixDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -30,6 +30,10 @@ public class TransacaoController {
     @Autowired
     private ContaService contaService;
 
+    @Autowired
+    private PixDTOValidator pixDTOValidator;
+
+
     @GetMapping("/pix")
     public String novaTransacaoPix(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){
         model.addAttribute("transacao", new PixDTO());
@@ -37,48 +41,27 @@ public class TransacaoController {
         return "transacao/pix";
     }
 
-    @GetMapping("/ted")
-    public String novaTransacaoTed(Model model, @RequestParam Long id){
-        model.addAttribute("transacao", new TedDocDTO());
-        return "transacao/ted";
-    }
-
-    @GetMapping("/doc")
-    public String novaTransacaoDoc(Model model, @RequestParam Long id){
-        model.addAttribute("transacao", new TedDocDTO());
-        return "transacao/doc";
-    }
-
     @PostMapping("/pix")
-    public String processandoNovaTransacaoPix(PixDTO pixDTO, @RequestParam Long id,
+    public String processandoNovaTransacaoPix(@ModelAttribute("transacao") @Valid PixDTO pixDTO, BindingResult bindingResult,
+                                              @RequestParam Long id,
                                               @AuthenticationPrincipal CustomUserDetails userDetails,
                                               Model model){
+
+        pixDTO.setIdContaOrigem(id);
+        pixDTOValidator.validate(pixDTO, bindingResult);
+        if (bindingResult.hasErrors())
+            return "transacao/pix";
 
         Transacao transacao = new Transacao();
         transacao.setValorTransacao(pixDTO.getValorTransacao());
         transacao.setTipoTransacao(TipoTransacao.PIX);
 
-        System.out.println("==========================" + id + "============================");
 
-        Optional<Conta> contaOrigemOptional = contaService.findById(id);
-        /*
-        if (contaOrigemOptional.isEmpty()){
-            // return erro
-        }
-        */
-        Conta contaOrigem = contaOrigemOptional.get();
+        Conta contaOrigem = contaService.findById(id).get();
         transacao.setContaOrigem(contaOrigem);
 
-        Optional<Conta> contaDestinoOptional = contaService.findByChavePix(pixDTO.getChavePix());
-        /*
-        if (contaDestinoOptional.isEmpty()){
-            // return erro
-        }
-        */
-        Conta contaDestino = contaDestinoOptional.get();
+        Conta contaDestino = contaService.findByChavePix(pixDTO.getChavePix()).get();
         transacao.setContaDestino(contaDestino);
-
-        // invalidar transacao pra mesma conta
 
         transacaoService.save(transacao);
 
@@ -94,4 +77,19 @@ public class TransacaoController {
         return "transacao/sucesso";
     }
 
+
+
+
+
+    @GetMapping("/ted")
+    public String novaTransacaoTed(Model model, @RequestParam Long id){
+        model.addAttribute("transacao", new TedDocDTO());
+        return "transacao/ted";
+    }
+
+    @GetMapping("/doc")
+    public String novaTransacaoDoc(Model model, @RequestParam Long id){
+        model.addAttribute("transacao", new TedDocDTO());
+        return "transacao/doc";
+    }
 }

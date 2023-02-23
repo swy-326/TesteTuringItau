@@ -18,6 +18,7 @@
         <div class="form-outline mb-4">
             <label>Senha</label>
             <input type="password" class="form-control" name="password" required minlength="8" maxlength="8">
+            <div style="color: red" th:if="${#fields.hasErrors('user')}" th:errors="*{password}"/>
         </div>
         <div class="form-outline mb-4">
             <label>Nome Completo</label>
@@ -26,7 +27,8 @@
         <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
 
         <div th:if="${#fields.hasErrors('user')}">
-            <p th:errors="*{user}">Erros</p>
+            <p th:errors="*{username}" th:text="${err}">Erros</p>
+            <p th:errors="*{password}" th:text="${err}">Erros</p>
         </div>
 
         <div class="text-center">

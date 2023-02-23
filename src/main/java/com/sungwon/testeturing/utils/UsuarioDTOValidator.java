@@ -32,17 +32,20 @@ public class UsuarioDTOValidator implements Validator {
         if (usuarioDTO.getUsername().isEmpty())
             bindingResult.rejectValue( "username", "deve conter CPF ou CNPJ");
 
-        if (!(usuarioService.findById(usuarioDTO.getUsername()).isEmpty()))
+        if (!usuarioDTO.getUsername().matches("[0-9]+"))
+            bindingResult.rejectValue("username", "usuario somente pode conter numeros");
+
+        if (usuarioService.findById(usuarioDTO.getUsername()).isPresent())
             bindingResult.rejectValue("username", "usuario existente");
 
         if (usuarioDTO.getPassword().length() != 8)
             bindingResult.rejectValue("password", "senha deve conter 8 digitos");
 
-        if (!verificarSenhaValdia(usuarioDTO.getPassword()))
+        if (!verificarSenhaValida(usuarioDTO.getPassword()))
             bindingResult.rejectValue("password", "senha deve conter caracteres especiais, letras maiúsculas e minúsculas");
     }
 
-    private boolean verificarSenhaValdia(String senha){
+    private boolean verificarSenhaValida(String senha){
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[-+_!@#$%^&*., ?]).+$";
         Pattern p = Pattern.compile(regex);
         return p.matcher(senha).matches();

@@ -4,13 +4,17 @@ import com.sungwon.testeturing.model.dto.ContaDTO;
 import com.sungwon.testeturing.model.entity.Conta;
 import com.sungwon.testeturing.security.CustomUserDetails;
 import com.sungwon.testeturing.service.ContaService;
+import com.sungwon.testeturing.utils.ContaDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.validation.Valid;
 
 import java.math.BigDecimal;
 
@@ -21,6 +25,9 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
+    @Autowired
+    private ContaDTOValidator contaDTOValidator;
+
     @GetMapping(value = "/nova")
     public String novaConta(Model model){
         model.addAttribute("conta", new ContaDTO());
@@ -28,7 +35,14 @@ public class ContaController {
     }
 
     @PostMapping(value =  "/nova")
-    public String processandoNovaConta(ContaDTO contaDTO, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public String processandoNovaConta(@ModelAttribute("conta") @Valid ContaDTO contaDTO, BindingResult bindingResult,
+                                       @AuthenticationPrincipal CustomUserDetails userDetails){
+
+        contaDTOValidator.validate(contaDTO, bindingResult);
+        if (bindingResult.hasErrors())
+            return "conta/nova_conta";
+
+        // criar nova conta
 
         Conta novaConta = contaDTO.toContaEntity();
         novaConta.setUsuarioRef(userDetails.getUsuario());
@@ -36,10 +50,6 @@ public class ContaController {
 
         contaService.insert(novaConta);
 
-        // atribuir usuarioRef
-        // sado = 0
         return "redirect:/";
     }
-
-    // mostrar saldo
 }
