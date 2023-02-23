@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
     <title>Main</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 </head>
 <body>
+
 <div align="center">
     <h3>Welcome, <td th:text="${nomeCompleto}">Nome Completo</td></h3>
 
@@ -16,12 +16,12 @@
     <h1>Contas</h1>
 
     <br/><br/>
-    <table border="1" cellpadding="10">
+    <table class="table table-hover">
         <thead>
         <tr>
-            <th>Conta</th>
-            <th>Saldo</th>
-            <th>Trasnferencia</th>
+            <th scope="col">Conta</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Trasnferencia</th>
         </tr>
         </thead>
         <tbody>
@@ -29,11 +29,11 @@
             <td th:text="|${conta.nroBanco}-${conta.nroAgencia}-${conta.nroConta}|">Nro Conta</td>
             <td th:text="${conta.saldo}">Saldo</td>
             <td>
-                <a th:href="@{'/transacao/pix}">PIX</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{'/transacao/ted}">TED</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{'/transacao/doc}">DOC</a>
+                <a th:href="@{/transacao/pix(id=${conta.id})}">PIX</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/transacao/ted(id=${conta.id})}">TED</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/transacao/doc(id=${conta.id})}">DOC</a>
             </td>
         </tr>
         </tbody>

@@ -17,6 +17,7 @@ public class ContaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private Usuario usuarioRef;
 
     private String chavePix;

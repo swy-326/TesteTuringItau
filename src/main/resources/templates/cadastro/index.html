@@ -25,10 +25,16 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
 
+        <div th:if="${#fields.hasErrors('user')}">
+            <p th:errors="*{user}">Erros</p>
+        </div>
+
         <div class="text-center">
             <p>Ja possui a conta? <a th:href="@{/login}">Login</a></p>
         </div>
     </form>
+
+
 </div>
 
 </body>

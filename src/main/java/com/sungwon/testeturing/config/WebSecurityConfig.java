@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http
             .authorizeRequests()
-            .antMatchers("/cadastro/**", "/webjars/**").permitAll()
+            .antMatchers("/cadastro/**", "/webjars/**", "/h2-console/**").permitAll()
             .anyRequest().authenticated()
         .and()
             .formLogin()
