@@ -16,9 +16,13 @@ public class TedDocDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long idContaOrigem;
+
     private String nroBanco;
     private String nroAgencia;
     private String nroConta;
+
+    private TipoTransacao tipoTransacao;
 
     private BigDecimal valorTransacao;
 

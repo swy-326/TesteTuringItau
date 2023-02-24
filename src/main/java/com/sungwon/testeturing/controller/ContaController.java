@@ -4,7 +4,7 @@ import com.sungwon.testeturing.model.dto.ContaDTO;
 import com.sungwon.testeturing.model.entity.Conta;
 import com.sungwon.testeturing.security.CustomUserDetails;
 import com.sungwon.testeturing.service.ContaService;
-import com.sungwon.testeturing.utils.ContaDTOValidator;
+import com.sungwon.testeturing.validator.ContaDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

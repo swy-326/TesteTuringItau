@@ -3,7 +3,7 @@ package com.sungwon.testeturing.controller;
 import com.sungwon.testeturing.model.dto.UsuarioDTO;
 import com.sungwon.testeturing.model.entity.Usuario;
 import com.sungwon.testeturing.service.UsuarioService;
-import com.sungwon.testeturing.utils.UsuarioDTOValidator;
+import com.sungwon.testeturing.validator.UsuarioDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

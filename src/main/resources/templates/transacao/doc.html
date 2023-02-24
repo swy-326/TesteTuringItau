@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Nova Transacao - DOC</title>
+    <style>.error {color: red;}</style>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -12,7 +13,7 @@
         <h1>Nova Transacao - DOC</h1>
     </div>
 
-    <form th:action="@{/transacao/doc}" method="post">
+    <form th:action="@{/transacao/doc(id=${contaId})}" method="post" th:object="${transacao}">
         <div class="form-outline mb-4">
             <label>Nro Banco</label>
             <input type="text" class="form-control" name="nroBanco" required>
@@ -24,10 +25,12 @@
         <div class="form-outline mb-4">
             <label>Nro Conta</label>
             <input type="text" class="form-control" name="nroConta" required>
+            <p th:if="${#fields.hasErrors('nroConta')}" th:errorclass="error" th:errors="*{nroConta}">Erro</p>
         </div>
         <div class="form-outline mb-4">
             <label>Valor</label>
             <input type="number" step="0.01" class="form-control" name="valorTransacao" min="10000" required>
+            <p th:if="${#fields.hasErrors('valorTransacao')}" th:errorclass="error" th:errors="*{valorTransacao}">Erro</p>
         </div>
         <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
     </form>

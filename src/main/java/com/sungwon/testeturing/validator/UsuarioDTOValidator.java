@@ -1,8 +1,7 @@
-package com.sungwon.testeturing.utils;
+package com.sungwon.testeturing.validator;
 
 import com.sungwon.testeturing.model.dto.UsuarioDTO;
 import com.sungwon.testeturing.service.UsuarioService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,7 +9,6 @@ import org.springframework.validation.Validator;
 
 import java.util.regex.Pattern;
 
-@Slf4j
 @Component
 public class UsuarioDTOValidator implements Validator {
 
@@ -30,19 +28,19 @@ public class UsuarioDTOValidator implements Validator {
         usuarioDTO.setUsername(usuarioDTO.getUsername().replaceAll("\\D+",""));
 
         if (usuarioDTO.getUsername().isEmpty())
-            bindingResult.rejectValue( "username", "deve conter CPF ou CNPJ");
+            bindingResult.rejectValue("username", null, "O campo não pode ser vazio");
 
-        if (!usuarioDTO.getUsername().matches("[0-9]+"))
-            bindingResult.rejectValue("username", "usuario somente pode conter numeros");
+        if (!usuarioDTO.getUsername().matches("^\\d+$"))
+            bindingResult.rejectValue("username", null, "CPF ou CNPJ deve conter somente números");
 
         if (usuarioService.findById(usuarioDTO.getUsername()).isPresent())
-            bindingResult.rejectValue("username", "usuario existente");
+            bindingResult.rejectValue("username", null, "Usuário já existente");
 
         if (usuarioDTO.getPassword().length() != 8)
-            bindingResult.rejectValue("password", "senha deve conter 8 digitos");
+            bindingResult.rejectValue("password", null, "A senha deve conter 8 dígitos");
 
         if (!verificarSenhaValida(usuarioDTO.getPassword()))
-            bindingResult.rejectValue("password", "senha deve conter caracteres especiais, letras maiúsculas e minúsculas");
+            bindingResult.rejectValue("password", null, "A senha deve conter caracteres especiais, letras maiusculas e minusculas");
     }
 
     private boolean verificarSenhaValida(String senha){
