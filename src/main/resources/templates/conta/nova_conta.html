@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Nova Conta</title>
+    <meta charset="UTF-8">
+    <title>Banco Turing</title>
     <style>.error {color: red;}</style>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 </head>
@@ -10,7 +11,7 @@
 <div class="container text-center">
 
     <div>
-        <h1>Nova Conta</h1>
+        <h1>Criar nova conta</h1>
     </div>
 
     <form th:action="@{/conta/nova}" method="post" th:object="${conta}">
@@ -20,20 +21,20 @@
             <p th:if="${#fields.hasErrors('chavePix')}" th:errorclass="error" th:errors="*{chavePix}">Erro</p>
         </div>
         <div class="form-outline mb-4">
-            <label>Nro Banco</label>
+            <label>Número do Banco</label>
             <input type="text" class="form-control" name="nroBanco" required>
         </div>
         <div class="form-outline mb-4">
-            <label>Nro Agencia</label>
+            <label>Número de Agencia</label>
             <input type="text" class="form-control" name="nroAgencia" required>
         </div>
         <div class="form-outline mb-4">
-            <label>Nro Conta</label>
+            <label>Número da Conta</label>
             <input type="text" class="form-control" name="nroConta" required>
             <p th:if="${#fields.hasErrors('nroConta')}" th:errorclass="error" th:errors="*{nroConta}">Erro</p>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Enviar</button>
     </form>
 
 </div>

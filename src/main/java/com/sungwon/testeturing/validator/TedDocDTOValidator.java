@@ -32,7 +32,7 @@ public class TedDocDTOValidator implements Validator {
         Optional<Conta> contaOrigemOptional = contaService.findById(tedDocDTO.getIdContaOrigem());
         Conta contaOrigem = null;
         if (contaOrigemOptional.isEmpty())
-            bindingResult.rejectValue("idContaOrigem", null, "conta origem inexistente");
+            bindingResult.rejectValue("idContaOrigem", null, "Conta origem inexistente");
         else
             contaOrigem = contaOrigemOptional.get();
 
@@ -42,28 +42,28 @@ public class TedDocDTOValidator implements Validator {
         );
         Conta contaDestino = null;
         if (contaDestinoOptioinal.isEmpty())
-            bindingResult.rejectValue("chavePix", null,"chave pix inexistente");
+            bindingResult.rejectValue("chavePix", null,"Chave pix inexistente");
         else
             contaDestino = contaDestinoOptioinal.get();
 
         // origem e desitno nao sao iguais
         if (contaDestino.equals(contaOrigem))
-            bindingResult.rejectValue("chavePix", null, "nao pode transferir para mesma conta");
+            bindingResult.rejectValue("chavePix", null, "Transferência não permitida para a mesma conta emissora");
 
         if (tedDocDTO.getTipoTransacao() == TipoTransacao.TED){
             // entre 5k e 10k
             if (tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(5000.00)) < 0
                 && tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(10000.00)) > 0)
-                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser entre 5k e 10k");
+                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser entre R$5.000,00 e R$10.000,00");
 
         }
         else if (tedDocDTO.getTipoTransacao() == TipoTransacao.DOC) {
             // acima de 10k
             if (tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(10000.00)) < 0)
-                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser acima de 10k");
+                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser acima de R$10.000,00");
         }
         else {
-            bindingResult.rejectValue("nroConta", null, "Tipo invalido de transacao");
+            bindingResult.rejectValue("nroConta", null, "Tipo inválido de transacao");
         }
     }
 }

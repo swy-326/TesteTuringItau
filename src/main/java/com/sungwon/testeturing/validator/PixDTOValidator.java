@@ -31,7 +31,7 @@ public class PixDTOValidator implements Validator {
         Optional<Conta> contaOrigemOptional = contaService.findById(pixDTO.getIdContaOrigem());
         Conta contaOrigem = null;
         if (contaOrigemOptional.isEmpty())
-            bindingResult.rejectValue("idContaOrigem", null, "conta origem inexistente");
+            bindingResult.rejectValue("idContaOrigem", null, "Conta origem inexistente");
         else
             contaOrigem = contaOrigemOptional.get();
 
@@ -39,18 +39,17 @@ public class PixDTOValidator implements Validator {
         Optional<Conta> contaDestinoOptioinal = contaService.findByChavePix(pixDTO.getChavePix());
         Conta contaDestino = null;
         if (contaDestinoOptioinal.isEmpty())
-            bindingResult.rejectValue("chavePix", null,"chave pix inexistente");
+            bindingResult.rejectValue("chavePix", null,"Chave pix inexistente");
         else
             contaDestino = contaDestinoOptioinal.get();
 
         // origem e desitno nao sao iguais
         if (contaDestino.equals(contaOrigem))
-            bindingResult.rejectValue("chavePix", null, "nao pode transferir para mesma conta");
+            bindingResult.rejectValue("chavePix", null, "Transferência não permitida para a mesma conta emissora");
 
         // valor esta entre 0 a 5k
         if (pixDTO.getValorTransacao().compareTo(BigDecimal.valueOf(0.01)) < 0
         &&  pixDTO.getValorTransacao().compareTo(BigDecimal.valueOf(5000.00)) > 0)
-            bindingResult.rejectValue("valorTransacao", null, "valor deve estar entre 0 e 5000");
-
+            bindingResult.rejectValue("valorTransacao", null, "Valor deve ser entre R$0,00 e R$5.000,00");
     }
 }

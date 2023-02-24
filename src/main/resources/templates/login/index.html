@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Banco Turing</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -19,10 +20,10 @@
             <label>Senha</label>
             <input type="password" class="form-control" name="password" required minlength="8" maxlength="8">
         </div>
-        <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Enviar</button>
 
         <div class="text-center">
-            <p>Not a member? <a th:href="@{/cadastro}">Register</a></p>
+            <p>Não tem conta? <a th:href="@{/cadastro}">Cadastrar</a></p>
         </div>
     </form>
 </div>

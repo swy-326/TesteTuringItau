@@ -31,7 +31,7 @@ public class UsuarioDTOValidator implements Validator {
             bindingResult.rejectValue("username", null, "O campo não pode ser vazio");
 
         if (!usuarioDTO.getUsername().matches("^\\d+$"))
-            bindingResult.rejectValue("username", null, "CPF ou CNPJ deve conter somente números");
+            bindingResult.rejectValue("username", null, "O campo deve conter somente números");
 
         if (usuarioService.findById(usuarioDTO.getUsername()).isPresent())
             bindingResult.rejectValue("username", null, "Usuário já existente");
@@ -40,7 +40,7 @@ public class UsuarioDTOValidator implements Validator {
             bindingResult.rejectValue("password", null, "A senha deve conter 8 dígitos");
 
         if (!verificarSenhaValida(usuarioDTO.getPassword()))
-            bindingResult.rejectValue("password", null, "A senha deve conter caracteres especiais, letras maiusculas e minusculas");
+            bindingResult.rejectValue("password", null, "A senha deve conter caracteres especiais, letras maiúsculas e minúsculas");
     }
 
     private boolean verificarSenhaValida(String senha){
