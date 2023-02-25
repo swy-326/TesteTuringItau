@@ -16,7 +16,7 @@ public class ContaService {
     @Autowired
     private ContaRepository repository;
 
-    public Conta insert(Conta conta){
+    public Conta save(Conta conta){
         return repository.save(conta);
     }
 

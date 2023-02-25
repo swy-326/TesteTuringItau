@@ -48,7 +48,7 @@ public class ContaController {
         novaConta.setUsuarioRef(userDetails.getUsuario());
         novaConta.setSaldo(BigDecimal.ZERO);
 
-        contaService.insert(novaConta);
+        contaService.save(novaConta);
 
         return "redirect:/";
     }

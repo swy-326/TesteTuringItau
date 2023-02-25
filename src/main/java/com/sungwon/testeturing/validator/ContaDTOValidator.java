@@ -31,5 +31,16 @@ public class ContaDTOValidator implements Validator {
         ).isPresent())
             bindingResult.rejectValue("nroConta", null, "Conta já existente no banco e agência fornecidos");
 
+        if (!contaDTO.getChavePix().matches("^\\d+$"))
+            bindingResult.rejectValue("chavePix", null, "Chave Pix deve ser um número");
+
+        if (!contaDTO.getNroBanco().matches("^\\d+$"))
+            bindingResult.rejectValue("nroBanco", null, "Número do banco deve ser um número");
+
+        if (!contaDTO.getNroAgencia().matches("^\\d+$"))
+            bindingResult.rejectValue("nroAgencia", null, "Número de agencia deve ser um número");
+
+        if (!contaDTO.getNroConta().matches("^\\d+$"))
+            bindingResult.rejectValue("nroConta", null, "Número da conta deve ser um número");
     }
 }
