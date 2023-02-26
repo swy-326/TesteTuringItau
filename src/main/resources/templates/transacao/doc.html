@@ -30,10 +30,11 @@
         </div>
         <div class="form-outline mb-4">
             <label>Valor</label>
-            <input type="number" step="0.01" class="form-control" name="valorTransacao" min="10000" required>
+            <input type="number" step="0.01" class="form-control" name="valorTransacao" min="10000.01" required>
             <p th:if="${#fields.hasErrors('valorTransacao')}" th:errorclass="error" th:errors="*{valorTransacao}">Erro</p>
         </div>
         <button type="submit" class="btn btn-primary btn-block mb-4">Enviar</button>
+        <a class="btn btn-danger" th:href="@{/}" role="button">Cancelar</a>
     </form>
 
 </div>

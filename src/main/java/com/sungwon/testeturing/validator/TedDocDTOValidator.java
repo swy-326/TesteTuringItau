@@ -47,14 +47,14 @@ public class TedDocDTOValidator implements Validator {
             contaDestino = contaDestinoOptioinal.get();
 
         // origem e desitno nao sao iguais
-        if (contaDestino.equals(contaOrigem))
+        if (contaDestino != null && contaOrigem != null && contaDestino.equals(contaOrigem))
             bindingResult.rejectValue("chavePix", null, "Transferência não permitida para a mesma conta emissora");
 
         if (tedDocDTO.getTipoTransacao() == TipoTransacao.TED){
             // entre 5k e 10k
             if (tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(5000.00)) < 0
                 && tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(10000.00)) > 0)
-                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser entre R$5.000,00 e R$10.000,00");
+                bindingResult.rejectValue("valorTransacao", null, "Valor deve ser acima de R$5.000,00 até R$10.000,00");
 
         }
         else if (tedDocDTO.getTipoTransacao() == TipoTransacao.DOC) {

@@ -44,7 +44,7 @@ public class PixDTOValidator implements Validator {
             contaDestino = contaDestinoOptioinal.get();
 
         // origem e desitno nao sao iguais
-        if (contaDestino.equals(contaOrigem))
+        if (contaDestino != null && contaOrigem != null && contaDestino.equals(contaOrigem))
             bindingResult.rejectValue("chavePix", null, "Transferência não permitida para a mesma conta emissora");
 
         // valor esta entre 0 a 5k

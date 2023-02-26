@@ -25,8 +25,6 @@ public class UsuarioDTOValidator implements Validator {
 
         UsuarioDTO usuarioDTO = (UsuarioDTO) o;
 
-        usuarioDTO.setUsername(usuarioDTO.getUsername().replaceAll("\\D+",""));
-
         if (usuarioDTO.getUsername().isEmpty())
             bindingResult.rejectValue("username", null, "O campo não pode ser vazio");
 
