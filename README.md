@@ -16,7 +16,7 @@ Aplicação desenvolvida para o Processo Seletivo do Programa de Estágio do Ban
 ### Clonar o aplicativo
 
 ```
-https://github.com/swy-326/teste-turing.git
+https://github.com/swy-326/TesteTuringItau.git
 ```
 
 ### Configurar MySql
