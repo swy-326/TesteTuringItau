@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco Turing</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Login</h1>
+    </div>
+    <form th:action="@{/login}" method="post">
+        <div class="form-outline mb-4">
+            <label>CPF ou CNPJ</label>
+            <input type="text" class="form-control" name="username" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Senha</label>
+            <input type="password" class="form-control" name="password" required minlength="8" maxlength="8">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Enviar</button>
+
+        <div class="text-center">
+            <p>Não tem conta? <a th:href="@{/cadastro}">Cadastrar</a></p>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

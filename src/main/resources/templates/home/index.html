@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco Turing</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div align="center">
+
+    <div>
+        <h3>Bem vindo, <td th:text="${nomeCompleto}">Nome Completo</td></h3>
+
+        <form th:action="@{/sair}" method="post">
+            <input type="submit" value="Sair" class="btn btn-danger" />
+        </form>
+    </div>
+
+    <h1>Minhas Contas</h1>
+
+    <br/><br/>
+    <table class="table table-hover text-center">
+        <thead>
+        <tr>
+            <th scope="col">Conta</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Transferência</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="conta : ${listaContas}">
+            <td th:text="|${conta.nroBanco}-${conta.nroAgencia}-${conta.nroConta}|">Nro Conta</td>
+            <td th:text="${conta.saldo}">Saldo</td>
+            <td>
+                <a th:href="@{/transacao/pix(id=${conta.id})}">PIX</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/transacao/ted(id=${conta.id})}">TED</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/transacao/doc(id=${conta.id})}">DOC</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3><a th:href="@{/conta/nova}" class="btn btn-primary">Adicionar nova conta</a></h3>
+
+</div>
+</body>
+</html>

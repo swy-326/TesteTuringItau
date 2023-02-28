@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco Turing</title>
+    <style>.error {color: red;}</style>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Cadastro</h1>
+    </div>
+    <form th:action="@{/cadastro}" method="post" th:object="${user}">
+        <div class="form-outline mb-4">
+            <label>CPF ou CNPJ</label>
+            <input type="text" class="form-control" name="username" required>
+            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}">Erro</p>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Senha</label>
+            <input type="password" class="form-control" name="password" required minlength="8" maxlength="8">
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">Erro</p>
+        </div>
+        <div class="form-outline mb-4">
+            <label>Nome Completo</label>
+            <input type="text" class="form-control" name="nomeCompleto" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Enviar</button>
+
+        <div class="text-center">
+            <p>Já possui a conta? <a th:href="@{/login}">Login</a></p>
+        </div>
+    </form>
+
+
+</div>
+
+</body>
+</html>
