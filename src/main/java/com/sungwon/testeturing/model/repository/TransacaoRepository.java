@@ -12,14 +12,14 @@ import java.util.List;
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
     @Query(value = "SELECT * FROM tb_transacao" +
-                   "WHERE conta_origem_id := contaOrigem", nativeQuery = true)
+                   "WHERE conta_origem_id = :contaOrigem", nativeQuery = true)
     List<Transacao> findByContaOrigem(@Param("contaOrigem") String contaOrigem);
 
     @Query(value = "SELECT * FROM tb_transacao" +
-            "WHERE conta_destino_id := contaDestino", nativeQuery = true)
+            "WHERE conta_destino_id = :contaDestino", nativeQuery = true)
     List<Transacao> findByContaDestino(@Param("contaDestino") String contaDestino);
 
     @Query(value = "SELECT * FROM tb_transacao" +
-            "WHERE (conta_destino_id := conta) OR (conta_origem_id := conta)", nativeQuery = true)
+            "WHERE (conta_destino_id = :conta) OR (conta_origem_id = :conta)", nativeQuery = true)
     List<Transacao> findAllByConta(@Param("conta") String conta);
 }

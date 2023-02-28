@@ -36,7 +36,6 @@ public class TransacaoController {
     @Autowired
     private TedDocDTOValidator tedDocDTOValidator;
 
-
     @GetMapping("/pix")
     public String novaTransacaoPix(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){
         model.addAttribute("transacao", new PixDTO());
@@ -55,10 +54,11 @@ public class TransacaoController {
         if (bindingResult.hasErrors())
             return "transacao/pix";
 
+
+        // criar nova transacao e salvar no bd
         Transacao transacao = new Transacao();
         transacao.setValorTransacao(pixDTO.getValorTransacao());
         transacao.setTipoTransacao(TipoTransacao.PIX);
-
 
         Conta contaOrigem = contaService.findById(id).get();
         transacao.setContaOrigem(contaOrigem);
@@ -71,7 +71,7 @@ public class TransacaoController {
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, pixDTO.getValorTransacao());
 
-        // redirecionar para pagina de sucesso
+        // redirecionar para a pagina de sucesso
         model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
         model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
         return "transacao/sucesso";
@@ -97,6 +97,7 @@ public class TransacaoController {
             return "transacao/ted";
 
 
+        // criar nova transacao e salvar no bd
         Transacao transacao = new Transacao();
         transacao.setValorTransacao(tedDTO.getValorTransacao());
         transacao.setTipoTransacao(TipoTransacao.TED);
@@ -114,7 +115,7 @@ public class TransacaoController {
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, tedDTO.getValorTransacao());
 
-        // redirecionar para pagina de sucesso
+        // redirecionar para a pagina de sucesso
         model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
         model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
         return "transacao/sucesso";
@@ -142,6 +143,7 @@ public class TransacaoController {
             return "transacao/doc";
 
 
+        // criar nova transacao e salvar no bd
         Transacao transacao = new Transacao();
         transacao.setValorTransacao(docDTO.getValorTransacao());
         transacao.setTipoTransacao(TipoTransacao.TED);
@@ -159,7 +161,7 @@ public class TransacaoController {
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, docDTO.getValorTransacao());
 
-        // redirecionar para pagina de sucesso
+        // redirecionar para a pagina de sucesso
         model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
         model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
         return "transacao/sucesso";

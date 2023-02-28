@@ -5,7 +5,6 @@ import com.sungwon.testeturing.security.CustomUserDetails;
 import com.sungwon.testeturing.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ public class HomeController {
     @Autowired
     private ContaService contaService;
 
-    // show name, accounts, balance
     @GetMapping
     public String home(Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
 

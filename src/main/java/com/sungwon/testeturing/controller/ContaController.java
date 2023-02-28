@@ -42,8 +42,8 @@ public class ContaController {
         if (bindingResult.hasErrors())
             return "conta/nova_conta";
 
-        // criar nova conta
 
+        // criar nova conta e salvar no bd
         Conta novaConta = contaDTO.toContaEntity();
         novaConta.setUsuarioRef(userDetails.getUsuario());
         novaConta.setSaldo(BigDecimal.ZERO);

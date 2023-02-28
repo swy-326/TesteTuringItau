@@ -1,6 +1,5 @@
 package com.sungwon.testeturing.model.dto;
 
-import com.sungwon.testeturing.model.entity.Transacao;
 import com.sungwon.testeturing.model.enums.TipoTransacao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
