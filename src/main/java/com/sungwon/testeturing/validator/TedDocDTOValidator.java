@@ -42,23 +42,21 @@ public class TedDocDTOValidator implements Validator {
         );
         Conta contaDestino = null;
         if (contaDestinoOptioinal.isEmpty())
-            bindingResult.rejectValue("chavePix", null,"Chave pix inexistente");
+            bindingResult.rejectValue("nroConta", null,"Conta inexistente");
         else
             contaDestino = contaDestinoOptioinal.get();
 
         // origem e desitno nao sao iguais
         if (contaDestino != null && contaOrigem != null && contaDestino.equals(contaOrigem))
-            bindingResult.rejectValue("chavePix", null, "Transferência não permitida para a mesma conta emissora");
+            bindingResult.rejectValue("nroConta", null, "Transferência não permitida para a mesma conta emissora");
 
+        // verificar o valor
         if (tedDocDTO.getTipoTransacao() == TipoTransacao.TED){
-            // entre 5k e 10k
             if (tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(5000.00)) < 0
                 && tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(10000.00)) > 0)
                 bindingResult.rejectValue("valorTransacao", null, "Valor deve ser acima de R$5.000,00 até R$10.000,00");
-
         }
         else if (tedDocDTO.getTipoTransacao() == TipoTransacao.DOC) {
-            // acima de 10k
             if (tedDocDTO.getValorTransacao().compareTo(BigDecimal.valueOf(10000.00)) < 0)
                 bindingResult.rejectValue("valorTransacao", null, "Valor deve ser acima de R$10.000,00");
         }
