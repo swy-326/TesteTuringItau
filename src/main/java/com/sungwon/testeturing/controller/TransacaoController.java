@@ -24,17 +24,20 @@ import java.math.BigDecimal;
 @RequestMapping(value = "/transacao")
 public class TransacaoController {
 
-    @Autowired
     private TransacaoService transacaoService;
-
-    @Autowired
     private ContaService contaService;
-
-    @Autowired
     private PixDTOValidator pixDTOValidator;
+    private TedDocDTOValidator tedDocDTOValidator;
 
     @Autowired
-    private TedDocDTOValidator tedDocDTOValidator;
+    public TransacaoController(TransacaoService transacaoService, ContaService contaService, PixDTOValidator pixDTOValidator, TedDocDTOValidator tedDocDTOValidator){
+        this.transacaoService = transacaoService;
+        this.contaService = contaService;
+        this.pixDTOValidator = pixDTOValidator;
+        this.tedDocDTOValidator = tedDocDTOValidator;
+    }
+
+
 
     @GetMapping("/pix")
     public String novaTransacaoPix(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){

@@ -22,11 +22,14 @@ import java.math.BigDecimal;
 @RequestMapping("/conta")
 public class ContaController {
 
-    @Autowired
     private ContaService contaService;
+    private ContaDTOValidator contaDTOValidator;
 
     @Autowired
-    private ContaDTOValidator contaDTOValidator;
+    public ContaController(ContaService contaService, ContaDTOValidator contaDTOValidator){
+        this.contaService = contaService;
+        this.contaDTOValidator = contaDTOValidator;
+    }
 
     @GetMapping(value = "/nova")
     public String novaConta(Model model){

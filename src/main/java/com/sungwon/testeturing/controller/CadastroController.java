@@ -20,11 +20,14 @@ import javax.validation.Valid;
 @RequestMapping(value  = "/cadastro")
 public class CadastroController {
 
-    @Autowired
     private UsuarioService usuarioService;
+    private UsuarioDTOValidator usuarioDTOValidator;
 
     @Autowired
-    private UsuarioDTOValidator usuarioDTOValidator;
+    public CadastroController(UsuarioService usuarioService, UsuarioDTOValidator usuarioDTOValidator){
+        this.usuarioService = usuarioService;
+        this.usuarioDTOValidator = usuarioDTOValidator;
+    }
 
     @GetMapping
     public String cadastro(Model model){

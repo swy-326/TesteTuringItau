@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @RequestMapping(value  = "/")
 public class HomeController {
 
-    @Autowired
     private ContaService contaService;
+
+    @Autowired
+    public HomeController(ContaService contaService){
+        this.contaService = contaService;
+    }
 
     @GetMapping
     public String home(Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
