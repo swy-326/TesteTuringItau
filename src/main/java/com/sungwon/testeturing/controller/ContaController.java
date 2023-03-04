@@ -5,6 +5,7 @@ import com.sungwon.testeturing.model.entity.Conta;
 import com.sungwon.testeturing.security.CustomUserDetails;
 import com.sungwon.testeturing.service.ContaService;
 import com.sungwon.testeturing.validator.ContaDTOValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
 
 import java.math.BigDecimal;
 
+
+@Slf4j
 @Controller
 @RequestMapping("/conta")
 public class ContaController {
@@ -34,6 +37,7 @@ public class ContaController {
     @GetMapping(value = "/nova")
     public String novaConta(Model model){
         model.addAttribute("conta", new ContaDTO());
+        log.info("Carregando pagina de cadastro de nova conta");
         return "conta/nova_conta";
     }
 
@@ -42,9 +46,10 @@ public class ContaController {
                                        @AuthenticationPrincipal CustomUserDetails userDetails){
 
         contaDTOValidator.validate(contaDTO, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            log.warn("Erro(s) no dado fornecido pelo usuario");
             return "conta/nova_conta";
-
+        }
 
         // criar nova conta e salvar no bd
         Conta novaConta = contaDTO.toContaEntity();
@@ -52,6 +57,7 @@ public class ContaController {
         novaConta.setSaldo(BigDecimal.ZERO);
 
         contaService.save(novaConta);
+        log.info("Conta cadastrada com sucesso");
 
         return "redirect:/";
     }

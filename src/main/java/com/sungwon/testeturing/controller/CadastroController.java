@@ -4,6 +4,7 @@ import com.sungwon.testeturing.model.dto.UsuarioDTO;
 import com.sungwon.testeturing.model.entity.Usuario;
 import com.sungwon.testeturing.service.UsuarioService;
 import com.sungwon.testeturing.validator.UsuarioDTOValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 
+@Slf4j
 @Controller
 @RequestMapping(value  = "/cadastro")
 public class CadastroController {
@@ -32,6 +34,7 @@ public class CadastroController {
     @GetMapping
     public String cadastro(Model model){
         model.addAttribute("user", new UsuarioDTO());
+        log.info("Carregando pagina de cadastro");
         return "cadastro/index";
     }
 
@@ -39,8 +42,10 @@ public class CadastroController {
     public String processarCadastro(@ModelAttribute("user") @Valid UsuarioDTO usuarioDTO, BindingResult bindingResult){
 
         usuarioDTOValidator.validate(usuarioDTO, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()){
+            log.warn("Erro(s) no dado fornecido pelo usuario");
             return "cadastro/index";
+        }
 
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -50,6 +55,8 @@ public class CadastroController {
         novoUsuario.setPassword(encodedPassword);
 
         usuarioService.save(novoUsuario);
+        log.info("Usuario cadastrado com sucesso");
+
         return "redirect:login/index";
     }
 
