@@ -13,10 +13,10 @@ Aplicação desenvolvida para o Processo Seletivo do Programa de Estágio do Ban
 
 ## Setup
 
-### Clonar o aplicativo
+### Clonar a aplicação
 
 ```
-https://github.com/swy-326/teste-turing.git
+https://github.com/swy-326/TesteTuringItau.git
 ```
 
 ### Configurar MySql
@@ -35,7 +35,7 @@ spring.datasource.password=
 mvn clean spring-boot:run
 ```
 
-O servidor será iniciado em http://localhost:8080
+A aplicação será iniciada em http://localhost:8080
 
 
 ## Desenvolvimento
@@ -43,3 +43,13 @@ O servidor será iniciado em http://localhost:8080
 ### Modelagem de Banco de Dados
 
 ![Modelagem de Banco de Dados](db.png "Banco de Dados")
+
+### Pontos a melhorar / implementar
+
+- Aumento da cobertura de testes
+- Tratamento de exceções
+- Utilização de Docker
+- Melhor controle das transações de BD (rollback, @Transactional)
+- Enriquecer a lógica dos services
+- Organização dos pacotes orientada à funcionalidade
+- TDD
