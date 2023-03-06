@@ -38,7 +38,7 @@ public class UsuarioServiceTest {
 
         Usuario resultado = usuarioService.save(usuario);
 
-        Assert.assertEquals(resultado.getUsername(), usuario.getUsername());
+        Assert.assertEquals(usuario.getUsername(), resultado.getUsername());
     }
 
     @Test

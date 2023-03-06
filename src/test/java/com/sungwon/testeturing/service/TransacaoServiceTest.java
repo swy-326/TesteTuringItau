@@ -43,7 +43,7 @@ public class TransacaoServiceTest {
 
         Transacao resultado = transacaoService.save(transacao);
 
-        Assert.assertEquals(resultado.getId(), transacao.getId());
+        Assert.assertEquals(transacao.getId(), resultado.getId());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TransacaoServiceTest {
 
         List<Transacao> resultado = transacaoService.findByContaOrigem("1");
 
-        Assert.assertEquals(resultado.size(), 1);
+        Assert.assertEquals(1, resultado.size());
     }
 
     @Test
@@ -62,6 +62,6 @@ public class TransacaoServiceTest {
 
         List<Transacao> resultado = transacaoService.findByContaOrigem("1");
 
-        Assert.assertEquals(resultado.size(), 0);
+        Assert.assertEquals(0, resultado.size());
     }
 }

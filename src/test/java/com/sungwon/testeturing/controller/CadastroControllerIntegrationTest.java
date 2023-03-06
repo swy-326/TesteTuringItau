@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.sql.DataSource;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -23,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CadastroController.class)
 @Import(UsuarioDTOValidator.class)
 @AutoConfigureMockMvc
-public class CadastroControllerTest {
+public class CadastroControllerIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
@@ -61,6 +63,7 @@ public class CadastroControllerTest {
                 .param("password", "0000")
                 .param("nomeCompleto", "a"))
             .andExpect(status().isOk())
+            .andExpect(model().hasErrors())
             .andExpect(view().name("cadastro/index"));
     }
 

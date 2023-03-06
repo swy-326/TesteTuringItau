@@ -1,4 +1,4 @@
 package com.sungwon.testeturing.controller;
 
-public class HomeControllerTest {
+public class CadastroControllerUnitTest {
 }

@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class ContaDTOValidatorTest {
-    /*
+
     @Mock
     private ContaService contaService;
 
@@ -30,7 +30,12 @@ public class ContaDTOValidatorTest {
     private ContaDTOValidator contaDTOValidator;
 
     @Test
-    public void chavePix_deveSerNumeros(){
+    public void novaConta_dadosValidos(){
+
+    }
+
+    @Test
+    public void novaConta_chavePixInvalido_deveAdicionarErro(){
 
         ContaDTO contaDTO = new ContaDTO(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
         Conta conta = new Conta(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
@@ -42,5 +47,31 @@ public class ContaDTOValidatorTest {
 
         Assert.assertFalse(errors.hasErrors());
     }
-    */
+
+    @Test
+    public void novaConta_nroBancoInvalido_deveAdicionarErro(){
+
+    }
+
+    @Test
+    public void novaConta_nroAgenciaInvalido_deveAdicionarErro(){
+
+    }
+
+    @Test
+    public void novaConta_nroContaInvalido_deveAdicionarErro(){
+
+    }
+
+    @Test
+    public void novaConta_chavePixExistente_deveAdicionarErro(){
+
+    }
+
+    @Test
+    public void novaConta_contaExistente_deveAdicionarErro(){
+
+    }
+
+
 }
