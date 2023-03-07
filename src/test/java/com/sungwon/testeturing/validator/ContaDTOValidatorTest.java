@@ -37,7 +37,7 @@ public class ContaDTOValidatorTest {
     @Test
     public void novaConta_chavePixInvalido_deveAdicionarErro(){
 
-        ContaDTO contaDTO = new ContaDTO(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
+        ContaDTO contaDTO = new ContaDTO(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO, "0");
         Conta conta = new Conta(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
 
         when(contaService.findByChavePix(any(String.class))).thenReturn(Optional.ofNullable(conta));

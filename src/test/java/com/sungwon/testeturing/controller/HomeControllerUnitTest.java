@@ -1,5 +1,6 @@
 package com.sungwon.testeturing.controller;
 
+import com.sungwon.testeturing.config.WithAccount;
 import com.sungwon.testeturing.model.dto.ContaDTO;
 import com.sungwon.testeturing.model.entity.Conta;
 import com.sungwon.testeturing.model.entity.Usuario;
@@ -49,10 +50,11 @@ public class HomeControllerUnitTest {
     }
 
     @Test
+    @WithAccount("000")
     public void homeShouldReturnAllContas(){
 
         Conta conta = new Conta(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
-        ContaDTO contaDto = new ContaDTO(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO);
+        ContaDTO contaDto = new ContaDTO(1L, new Usuario(), "1", "1", "1", "1", BigDecimal.ZERO, "0");
 
         List<Conta> list = new ArrayList<Conta>(Arrays.asList(conta));
         List<Conta> listContaMock = Mockito.mock(List.class);

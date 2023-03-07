@@ -36,4 +36,5 @@ public class LoginControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("login/index"));
     }
+
 }
