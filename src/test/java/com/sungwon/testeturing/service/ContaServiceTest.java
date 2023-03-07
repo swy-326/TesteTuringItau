@@ -43,7 +43,7 @@ public class ContaServiceTest {
 
         Conta resultado = contaService.save(conta);
 
-        Assert.assertEquals(resultado.getChavePix(), conta.getChavePix());
+        Assert.assertEquals(conta.getChavePix(), resultado.getChavePix());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ContaServiceTest {
 
         List<Conta> resultado = contaService.findByUsuarioRef("1");
 
-        Assert.assertEquals(resultado.size(), 1);
+        Assert.assertEquals(1, resultado.size());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ContaServiceTest {
 
         List<Conta> resultado = contaService.findByUsuarioRef("1");
 
-        Assert.assertEquals(resultado.size(), 0);
+        Assert.assertEquals(0, resultado.size());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ContaServiceTest {
 
         Conta resultado = contaService.update(conta);
 
-        Assert.assertEquals(resultado.getChavePix(), conta.getChavePix());
+        Assert.assertEquals(conta.getChavePix(), resultado.getChavePix());
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.sungwon.testeturing.service;
 
 import com.sungwon.testeturing.model.entity.Conta;
 import com.sungwon.testeturing.model.repository.ContaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ContaService {
 
     @Autowired

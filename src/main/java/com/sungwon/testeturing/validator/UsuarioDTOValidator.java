@@ -43,6 +43,7 @@ public class UsuarioDTOValidator implements Validator {
 
     private boolean verificarSenhaValida(String senha){
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[-+_!@#$%^&*., ?]).+$";
+        // ^(?=.*[a-z])(?=.*[A-Z])(?=.*[-+_!@#$%^&*., ?])(?!(?=.*[0-9])).+$ nao pode conter nro?
         Pattern p = Pattern.compile(regex);
         return p.matcher(senha).matches();
     }

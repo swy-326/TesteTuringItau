@@ -10,6 +10,7 @@ import com.sungwon.testeturing.service.ContaService;
 import com.sungwon.testeturing.service.TransacaoService;
 import com.sungwon.testeturing.validator.PixDTOValidator;
 import com.sungwon.testeturing.validator.TedDocDTOValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,27 +20,37 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
+
+@Slf4j
 @Controller
 @RequestMapping(value = "/transacao")
 public class TransacaoController {
 
-    @Autowired
     private TransacaoService transacaoService;
-
-    @Autowired
     private ContaService contaService;
-
-    @Autowired
     private PixDTOValidator pixDTOValidator;
+    private TedDocDTOValidator tedDocDTOValidator;
 
     @Autowired
-    private TedDocDTOValidator tedDocDTOValidator;
+    public TransacaoController(TransacaoService transacaoService, ContaService contaService, PixDTOValidator pixDTOValidator, TedDocDTOValidator tedDocDTOValidator){
+        this.transacaoService = transacaoService;
+        this.contaService = contaService;
+        this.pixDTOValidator = pixDTOValidator;
+        this.tedDocDTOValidator = tedDocDTOValidator;
+    }
+
+
 
     @GetMapping("/pix")
     public String novaTransacaoPix(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){
         model.addAttribute("transacao", new PixDTO());
         model.addAttribute("contaId", id);
+        log.info("Carregando pagina de PIX");
+
         return "transacao/pix";
     }
 
@@ -51,8 +62,10 @@ public class TransacaoController {
 
         pixDTO.setIdContaOrigem(id);
         pixDTOValidator.validate(pixDTO, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()){
+            log.warn("Erro(s) no dado fornecido pelo usuario");
             return "transacao/pix";
+        }
 
 
         // criar nova transacao e salvar no bd
@@ -65,15 +78,19 @@ public class TransacaoController {
 
         Conta contaDestino = contaService.findByChavePix(pixDTO.getChavePix()).get();
         transacao.setContaDestino(contaDestino);
-
         transacaoService.save(transacao);
+
+        log.info("Transacao salva com sucesso");
 
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, pixDTO.getValorTransacao());
+        log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor", contaOrigem.getSaldo().toString().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().toString().replace(".", ","));
+        log.info("Redirecionando para a pagina de sucesso da transacao PIX");
+
         return "transacao/sucesso";
     }
 
@@ -81,6 +98,8 @@ public class TransacaoController {
     public String novaTransacaoTed(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){
         model.addAttribute("transacao", new TedDocDTO());
         model.addAttribute("contaId", id);
+        log.info("Carregando a pagina de TED");
+
         return "transacao/ted";
     }
 
@@ -93,8 +112,10 @@ public class TransacaoController {
         tedDTO.setIdContaOrigem(id);
         tedDTO.setTipoTransacao(TipoTransacao.TED);
         tedDocDTOValidator.validate(tedDTO, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()){
+            log.warn("Erro(s) no dado fornecido pelo usuario");
             return "transacao/ted";
+        }
 
 
         // criar nova transacao e salvar no bd
@@ -111,13 +132,17 @@ public class TransacaoController {
         transacao.setContaDestino(contaDestino);
 
         transacaoService.save(transacao);
+        log.info("Transacao salva com sucesso");
 
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, tedDTO.getValorTransacao());
+        log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor", contaOrigem.getSaldo().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().replace(".", ","));
+        log.info("Redirecionando para a pagina de sucesso da transacao TED");
+
         return "transacao/sucesso";
     }
 
@@ -127,6 +152,8 @@ public class TransacaoController {
     public String novaTransacaoDoc(Model model, @RequestParam Long id, @AuthenticationPrincipal CustomUserDetails userDetails){
         model.addAttribute("transacao", new TedDocDTO());
         model.addAttribute("contaId", id);
+        log.info("Carregando a pagina de DOC");
+
         return "transacao/doc";
     }
 
@@ -139,8 +166,10 @@ public class TransacaoController {
         docDTO.setIdContaOrigem(id);
         docDTO.setTipoTransacao(TipoTransacao.DOC);
         tedDocDTOValidator.validate(docDTO, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()){
+            log.warn("Erro(s) no dado fornecido pelo usuario");
             return "transacao/doc";
+        }
 
 
         // criar nova transacao e salvar no bd
@@ -157,13 +186,17 @@ public class TransacaoController {
         transacao.setContaDestino(contaDestino);
 
         transacaoService.save(transacao);
+        log.info("Transacao salva com sucesso");
 
         // atualizar o saldo das contas
         atualizaSaldoContas(contaOrigem, contaDestino, docDTO.getValorTransacao());
+        log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor",contaOrigem.getSaldo().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().replace(".", ","));
+        log.info("Redirecionando para a pagina de sucesso da transacao DOC");
+
         return "transacao/sucesso";
     }
 
