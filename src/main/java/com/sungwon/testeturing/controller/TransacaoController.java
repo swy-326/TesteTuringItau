@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 @Slf4j
@@ -84,8 +87,8 @@ public class TransacaoController {
         log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor", contaOrigem.getSaldo().toString().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().toString().replace(".", ","));
         log.info("Redirecionando para a pagina de sucesso da transacao PIX");
 
         return "transacao/sucesso";
@@ -136,8 +139,8 @@ public class TransacaoController {
         log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor", contaOrigem.getSaldo().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().replace(".", ","));
         log.info("Redirecionando para a pagina de sucesso da transacao TED");
 
         return "transacao/sucesso";
@@ -190,8 +193,8 @@ public class TransacaoController {
         log.info("Saldo da conta atualizada com sucesso");
 
         // redirecionar para a pagina de sucesso
-        model.addAttribute("saldoEmissor", String.format("%,.2f", contaOrigem.getSaldo()));
-        model.addAttribute("saldoReceptor", String.format("%,.2f", contaDestino.getSaldo()));
+        model.addAttribute("saldoEmissor",contaOrigem.getSaldo().toString().replace(".", ","));
+        model.addAttribute("saldoReceptor", contaDestino.getSaldo().toString().replace(".", ","));
         log.info("Redirecionando para a pagina de sucesso da transacao DOC");
 
         return "transacao/sucesso";

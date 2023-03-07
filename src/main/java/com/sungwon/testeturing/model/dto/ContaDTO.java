@@ -24,11 +24,15 @@ public class ContaDTO implements Serializable {
     private String nroBanco;
     private String nroAgencia;
     private String nroConta;
+
     private BigDecimal saldo;
+    private String saldoStr;
 
     public static ContaDTO create(Conta conta){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(conta, ContaDTO.class);
+        ContaDTO contaDTO = modelMapper.map(conta, ContaDTO.class);
+        contaDTO.setSaldoStr( conta.getSaldo().toString().replace(".", ",") );
+        return contaDTO;
     }
 
     public Conta toContaEntity(){
